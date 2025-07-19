@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update Tugas Manager - Dhani Market</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #e0f2ff, #ffffff);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-2xl bg-white shadow-2xl rounded-2xl p-10 border border-blue-200">
+    <div class="text-center mb-8">
+      <img src="https://via.placeholder.com/100x100.png?text=Logo" alt="Logo Dhani Market" class="mx-auto mb-4 rounded-full border-4 border-blue-300">
+      <h1 class="text-3xl font-bold text-blue-700">📋 Notulen Manager</h1>
+      <p class="text-sm text-blue-500">Silakan isi laporan perkembangan tugas divisi Anda</p>
+    </div>
+
+    <form id="actionForm" class="space-y-6">
+      <div>
+        <label class="block text-sm font-semibold text-blue-800 mb-1">Nama / Divisi</label>
+        <select name="nama" required class="w-full rounded-lg border border-blue-300 focus:ring-2 focus:ring-blue-500 p-2">
+          <option value="">-- Pilih --</option>
+          <option value="Ahmad (JB)">Ahmad (JB)</option>
+          <option value="Nazil (Jual)">Nazil (Jual)</option>
+          <option value="Alfiah (Akuntan)">Alfiah (Akuntan)</option>
+          <option value="Krisna 1 (Rental)">Krisna 1 (Rental)</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold text-blue-800 mb-1">Masalah / Tugas</label>
+        <input type="text" name="tugas" required placeholder="Sampaikan Keluhanmu di Sini" class="w-full rounded-lg border border-blue-300 focus:ring-2 focus:ring-blue-500 p-2">
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold text-blue-800 mb-1">Status</label>
+        <select name="status" required class="w-full rounded-lg border border-blue-300 focus:ring-2 focus:ring-blue-500 p-2">
+          <option value="">-- Pilih --</option>
+          <option value="✅ Selesai">✅ Selesai</option>
+          <option value="⏳ Proses">⏳ Proses</option>
+          <option value="❌ Belum Jalan">❌ Belum Jalan</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold text-blue-800 mb-1">Catatan / Update</label>
+        <textarea name="catatan" rows="4" required placeholder="Isi progres, kendala, atau info tambahan" class="w-full rounded-lg border border-blue-300 focus:ring-2 focus:ring-blue-500 p-2"></textarea>
+      </div>
+
+      <div>
+        <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition">Kirim Update</button>
+        <p id="statusMsg" class="text-center text-sm text-green-600 mt-3 hidden">✅ Data berhasil dikirim!</p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxBohjbRGGdrBns50_kFcSVKL582PoViGrFSQKqqngdD2q7IqbiTTLGJd1bBjuJX73aTA/exec';
+    const form = document.getElementById('actionForm');
+    const statusMsg = document.getElementById('statusMsg');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => {
+          form.reset();
+          statusMsg.classList.remove('hidden');
+          setTimeout(() => statusMsg.classList.add('hidden'), 4000);
+        })
+        .catch(error => alert('Gagal mengirim data: ' + error.message));
+    });
+  </script>
+</body>
+</html>
